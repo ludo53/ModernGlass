@@ -73,6 +73,12 @@ pub fn run(verbose: bool, input: Option<String>, output: Option<String>) -> Resu
     info!("Starting ModernGlass processing");
     
     let mut processor = ModernGlassProcessor::new(verbose);
+
+   if let Some(input_path) = input {
+    let path = Path::new(&input_path);
+    if !path.exists() {
+        return Err(anyhow!("Input file not found: {}", input_path));
+    }
     
     // Read input
     let input_data = match input {
